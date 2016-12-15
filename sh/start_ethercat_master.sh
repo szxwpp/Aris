@@ -30,4 +30,4 @@ cp /etc/sysconfig/ethercat /opt/etherlab/etc/sysconfig/ethercat
 
 sleep 3
 
-/opt/etherlab/bin/ethercat sla
+/opt/etherlab/bin/ethercat slave

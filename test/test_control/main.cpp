@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-	test_control_ethercat();
+    //test_control_ethercat();
 	test_control_motion();
 
 

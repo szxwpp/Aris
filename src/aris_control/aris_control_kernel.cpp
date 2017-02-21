@@ -305,6 +305,10 @@ namespace aris
 		{
 			return *reinterpret_cast<const std::int32_t*>(static_cast<EcSlaveHandle*>(slave_handle)->domain_pd_ + static_cast<EcPdoHandle*>(pdo_handle)->offset_);
 		}
+        auto aris_ecrt_pdo_read_float(Handle* slave_handle, Handle* pdo_handle)->float
+        {
+            return *reinterpret_cast<const float*>(static_cast<EcSlaveHandle*>(slave_handle)->domain_pd_ + static_cast<EcPdoHandle*>(pdo_handle)->offset_);
+        }
 		auto aris_ecrt_pdo_write_uint8(Handle* slave_handle, Handle* pdo_handle, std::uint8_t value)->void
 		{
 			*reinterpret_cast<std::uint8_t*>(static_cast<EcSlaveHandle*>(slave_handle)->domain_pd_ + static_cast<EcPdoHandle*>(pdo_handle)->offset_) = value;
@@ -329,6 +333,10 @@ namespace aris
 		{
 			*reinterpret_cast<std::int32_t*>(static_cast<EcSlaveHandle*>(slave_handle)->domain_pd_ + static_cast<EcPdoHandle*>(pdo_handle)->offset_) = value;
 		}
+        auto aris_ecrt_pdo_write_float(Handle* slave_handle, Handle* pdo_handle, float value)->void
+        {
+            *reinterpret_cast<float*>(static_cast<EcSlaveHandle*>(slave_handle)->domain_pd_ + static_cast<EcPdoHandle*>(pdo_handle)->offset_) = value;
+        }
 		auto aris_ecrt_sdo_read(Handle* master_handle, std::uint16_t slave_position, std::uint16_t index, std::uint8_t subindex,
 			std::uint8_t *to_buffer, std::size_t buffer_size, std::size_t *result_size, std::uint32_t *abort_code)->int
 		{

@@ -61,7 +61,8 @@ namespace aris
 				INT8,
 				UINT32,
 				UINT16,
-				UINT8
+                UINT8,
+                FLOAT,
 			};
 
 			auto slave()->Slave&;
@@ -95,12 +96,14 @@ namespace aris
 			auto read(std::uint32_t &value)->void;
 			auto read(std::uint16_t &value)->void;
 			auto read(std::uint8_t &value)->void;
+            auto read(float &value)->void;
 			auto write(std::int32_t value)->void;
 			auto write(std::int16_t value)->void;
 			auto write(std::int8_t value)->void;
 			auto write(std::uint32_t value)->void;
 			auto write(std::uint16_t value)->void;
 			auto write(std::uint8_t value)->void;
+            auto write(float value)->void;
 			virtual ~Pdo();
 			explicit Pdo(Object &father, const aris::core::XmlElement &xml_ele);
 			Pdo(const Pdo &);
@@ -252,12 +255,14 @@ namespace aris
 			auto readPdoIndex(std::uint16_t index, std::uint8_t subindex, std::uint8_t &value)->void;
 			auto readPdoIndex(std::uint16_t index, std::uint8_t subindex, std::uint16_t &value)->void;
 			auto readPdoIndex(std::uint16_t index, std::uint8_t subindex, std::uint32_t &value)->void;
+            auto readPdoIndex(std::uint16_t index, std::uint8_t subindex, float &value)->void;
 			auto writePdoIndex(std::uint16_t index, std::uint8_t subindex, std::int8_t value)->void;
 			auto writePdoIndex(std::uint16_t index, std::uint8_t subindex, std::int16_t value)->void;
 			auto writePdoIndex(std::uint16_t index, std::uint8_t subindex, std::int32_t value)->void;
 			auto writePdoIndex(std::uint16_t index, std::uint8_t subindex, std::uint8_t value)->void;
 			auto writePdoIndex(std::uint16_t index, std::uint8_t subindex, std::uint16_t value)->void;
 			auto writePdoIndex(std::uint16_t index, std::uint8_t subindex, std::uint32_t value)->void;
+            auto writePdoIndex(std::uint16_t index, std::uint8_t subindex, float value)->void;
 
             auto readSdoIndex(std::uint16_t index, std::uint8_t subindex, std::int8_t &value)->void;
             auto readSdoIndex(std::uint16_t index, std::uint8_t subindex, std::int16_t &value)->void;

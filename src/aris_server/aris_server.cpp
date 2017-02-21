@@ -186,12 +186,12 @@ namespace aris
             if (cmd_num_ > 0)
 			{
 				if (executeCmd())
-				{
+                {
                     if (++count_ % 1000 == 0)
                         server_->widgetRoot().mout() << "execute cmd in count: " << count_;
 				}
 				else
-				{
+                {
                     server_->widgetRoot().mout() << "cmd finished, spend " << count_ + 1 <<" counts\n\n";
                     count_ = 0;
                     current_cmd_ = (current_cmd_ + 1) % CMD_POOL_SIZE;
@@ -381,7 +381,7 @@ namespace aris
         auto ControlServer::Imp::run()->int
         {
             GaitParamBase *param = reinterpret_cast<GaitParamBase *>(cmd_queue_[current_cmd_]);
-			param->cs_ = server_;
+            param->cs_ = server_;
 
             // 执行gait函数 //
             int ret = this->plan_vec_.at(param->gait_id_).operator()(*model_.get(), *param);

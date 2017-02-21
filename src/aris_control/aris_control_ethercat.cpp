@@ -181,6 +181,11 @@ namespace aris
 				imp_->data_type_ = UINT8;
 				imp_->data_bit_size_ = 8;
 			}
+            else if (xml_ele.Attribute("datatype", "float"))
+            {
+                imp_->data_type_ = FLOAT;
+                imp_->data_bit_size_ = 32;
+            }
 			else
 			{
 				throw std::runtime_error("Data Object in slave has invalid \"datatype\" attribute");
@@ -442,6 +447,12 @@ namespace aris
 			if (dataType() != UINT8) throw std::runtime_error("can not read pdo with wrong data type");
 			value = aris_ecrt_pdo_read_uint8(slave().ecHandle(), ecHandle());
 		}
+        auto Pdo::read(float &value)->void
+        {
+            if (!static_cast<const PdoGroup &>(father()).tx()) throw std::runtime_error("can not read pdo with rx type");
+            if (dataType() != FLOAT) throw std::runtime_error("can not read pdo with wrong data type");
+            value = aris_ecrt_pdo_read_float(slave().ecHandle(), ecHandle());
+        }
 		auto Pdo::write(std::int32_t value)->void
 		{
 			if (static_cast<const PdoGroup &>(father()).tx()) throw std::runtime_error("can not read pdo with rx type");
@@ -478,6 +489,12 @@ namespace aris
 			if (dataType() != UINT8) throw std::runtime_error("can not read pdo with wrong data type");
 			aris_ecrt_pdo_write_uint8(slave().ecHandle(), ecHandle(), value);
 		}
+        auto Pdo::write(float value)->void
+        {
+            if (static_cast<const PdoGroup &>(father()).tx()) throw std::runtime_error("can not read pdo with rx type");
+            if (dataType() != FLOAT) throw std::runtime_error("can not read pdo with wrong data type");
+            aris_ecrt_pdo_write_float(slave().ecHandle(), ecHandle(), value);
+        }
 		Pdo::~Pdo() = default;
 		Pdo::Pdo(Object &father, const aris::core::XmlElement &xml_ele) :DO(father, xml_ele) {}
 		Pdo::Pdo(const Pdo &) = default;
@@ -596,6 +613,11 @@ namespace aris
 			auto id_pair = imp_->pdo_map_.at(index).at(subindex);
 			pdoGroupPool().at(id_pair.first).at(id_pair.second).read(value);
 		}
+        auto Slave::readPdoIndex(std::uint16_t index, std::uint8_t subindex, float &value)->void
+        {
+            auto id_pair = imp_->pdo_map_.at(index).at(subindex);
+            pdoGroupPool().at(id_pair.first).at(id_pair.second).read(value);
+        }
 		auto Slave::writePdoIndex(std::uint16_t index, std::uint8_t subindex, std::int8_t value)->void
 		{
 			auto id_pair = imp_->pdo_map_.at(index).at(subindex);
@@ -626,6 +648,11 @@ namespace aris
 			auto id_pair = imp_->pdo_map_.at(index).at(subindex);
 			pdoGroupPool().at(id_pair.first).at(id_pair.second).write(value);
 		}
+        auto Slave::writePdoIndex(std::uint16_t index, std::uint8_t subindex, float value)->void
+        {
+            auto id_pair = imp_->pdo_map_.at(index).at(subindex);
+            pdoGroupPool().at(id_pair.first).at(id_pair.second).write(value);
+        }
 		auto Slave::readSdoConfigIndex(std::uint16_t index, std::uint8_t subindex, std::int8_t &value)const->void
 		{
 			int sdo_ID = imp_->sdo_map_.at(index).at(subindex);
